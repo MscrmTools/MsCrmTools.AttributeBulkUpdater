@@ -69,6 +69,14 @@ namespace MsCrmTools.AttributeBulkUpdater
             }
         }
 
+        private void btnInvertSelection_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lvAttributes.Items)
+            {
+                item.Checked = !item.Checked;
+            }
+        }
+
         private void btnResetAttributes_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in lvAttributes.Items)
@@ -123,6 +131,7 @@ namespace MsCrmTools.AttributeBulkUpdater
             lvAttributes.Items.Clear();
             btnCheck.Enabled = false;
             btnCheckAttrOnForms.Enabled = false;
+            btnInvertSelection.Enabled = false;
             btnResetAttributes.Enabled = false;
             gbEntities.Enabled = false;
             tsbPublishEntity.Enabled = false;
@@ -235,6 +244,7 @@ namespace MsCrmTools.AttributeBulkUpdater
                             btnResetAttributes.Enabled = true;
                             btnCheck.Enabled = true;
                             btnCheckAttrOnForms.Enabled = true;
+                            btnInvertSelection.Enabled = true;
                             gbAttributes.Enabled = true;
                             gbPropertySelection.Enabled = true;
                         }
@@ -353,6 +363,7 @@ namespace MsCrmTools.AttributeBulkUpdater
             btnResetAttributes.Enabled = false;
             btnCheck.Enabled = false;
             btnCheckAttrOnForms.Enabled = false;
+            btnInvertSelection.Enabled = false;
 
             lvEntities.Sorting = lvEntities.Sorting == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
             lvEntities.ListViewItemSorter = new ListViewItemComparer(e.Column, lvEntities.Sorting);
