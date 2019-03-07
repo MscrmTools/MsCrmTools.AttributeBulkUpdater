@@ -43,11 +43,11 @@ namespace MsCrmTools.AttributeBulkUpdater
 
         #region Properties
 
+        public string HelpUrl { get { return "https://github.com/MscrmTools/MsCrmTools.AttributeBulkUpdater/wiki"; } }
         public string RepositoryName { get { return "MsCrmTools.AttributeBulkUpdater"; } }
         public string UserName { get { return "MscrmTools"; } }
-        public string HelpUrl { get { return "https://github.com/MscrmTools/MsCrmTools.AttributeBulkUpdater/wiki"; } }
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
@@ -55,10 +55,10 @@ namespace MsCrmTools.AttributeBulkUpdater
         {
             foreach (ListViewItem item in lvAttributes.Items)
             {
-                item.Checked = ((Button)sender).Text == "Check All";
+                item.Checked = ((Button)sender).Text == @"Check All";
             }
 
-            ((Button)sender).Text = ((Button)sender).Text == "Check All" ? "Clear All" : "Check All";
+            ((Button)sender).Text = ((Button)sender).Text == @"Check All" ? "Clear All" : "Check All";
         }
 
         private void btnCheckAttrOnForms_Click(object sender, EventArgs e)
@@ -123,6 +123,7 @@ namespace MsCrmTools.AttributeBulkUpdater
             lvAttributes.Items.Clear();
             btnCheck.Enabled = false;
             btnCheckAttrOnForms.Enabled = false;
+            btnInvertSelection.Enabled = false;
             btnResetAttributes.Enabled = false;
             gbEntities.Enabled = false;
             tsbPublishEntity.Enabled = false;
@@ -137,7 +138,7 @@ namespace MsCrmTools.AttributeBulkUpdater
                     if (e.Error != null)
                     {
                         string errorMessage = CrmExceptionHelper.GetErrorMessage(e.Error, true);
-                        MessageBox.Show(ParentForm, errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ParentForm, errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
@@ -223,7 +224,7 @@ namespace MsCrmTools.AttributeBulkUpdater
                     {
                         if (evt.Error != null)
                         {
-                            MessageBox.Show(this, evt.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(this, evt.Error.Message, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
                         {
@@ -233,6 +234,7 @@ namespace MsCrmTools.AttributeBulkUpdater
                             tsbSaveAttributes.Enabled = true;
                             tsbPublishEntity.Enabled = true;
                             btnResetAttributes.Enabled = true;
+                            btnInvertSelection.Enabled = true;
                             btnCheck.Enabled = true;
                             btnCheckAttrOnForms.Enabled = true;
                             gbAttributes.Enabled = true;
@@ -251,8 +253,8 @@ namespace MsCrmTools.AttributeBulkUpdater
         {
             if (!chkValidForAdvancedFind.Checked && !chkValidForAudit.Checked && !chkRequirementLevel.Checked && !chkIsSecured.Checked)
             {
-                MessageBox.Show(this, "It is required to select at least one property to update:\r\n- Valid for advanced find\r\n- Is audit enabled\r\n - Requirement levelr\n - Is secured",
-                    "Warning",
+                MessageBox.Show(this, @"It is required to select at least one property to update:\r\n- Valid for advanced find\r\n- Is audit enabled\r\n - Requirement levelr\n - Is secured",
+                    @"Warning",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
 
@@ -311,7 +313,7 @@ namespace MsCrmTools.AttributeBulkUpdater
                         if (evt.Error != null)
                         {
                             string errorMessage = CrmExceptionHelper.GetErrorMessage(evt.Error, false);
-                            MessageBox.Show(ParentForm, errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ParentForm, errorMessage, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                         tsbPublishEntity.Enabled = true;
@@ -360,6 +362,14 @@ namespace MsCrmTools.AttributeBulkUpdater
 
         #endregion Column Sorting Handlers
 
+        private void btnInvertSelection_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lvAttributes.Items)
+            {
+                item.Checked = !item.Checked;
+            }
+        }
+
         private void CheckItems()
         {
             foreach (ListViewItem item in lvAttributes.Items)
@@ -401,6 +411,11 @@ namespace MsCrmTools.AttributeBulkUpdater
             }
         }
 
+        private void chkIsSecured_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckItems();
+        }
+
         private void chkRequirementLevel_CheckedChanged(object sender, EventArgs e)
         {
             cboRequirementLevel.Enabled = chkRequirementLevel.Checked;
@@ -412,11 +427,6 @@ namespace MsCrmTools.AttributeBulkUpdater
         }
 
         private void chkValidForAudit_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckItems();
-        }
-
-        private void chkIsSecured_CheckedChanged(object sender, EventArgs e)
         {
             CheckItems();
         }
