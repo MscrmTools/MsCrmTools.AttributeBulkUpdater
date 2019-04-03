@@ -239,6 +239,10 @@ namespace MsCrmTools.AttributeBulkUpdater
                             btnCheckAttrOnForms.Enabled = true;
                             gbAttributes.Enabled = true;
                             gbPropertySelection.Enabled = true;
+                            gbPropertyUpdater.Enabled = true;
+                            cboValidForAdvancedFind.SelectedIndex = 0;
+                            cboValidForAudit.SelectedIndex = 0;
+                            cboIsSecured.SelectedIndex = 0;
                         }
                     }
                 });
@@ -251,24 +255,22 @@ namespace MsCrmTools.AttributeBulkUpdater
 
         private void tsbSaveAttributes_Click(object sender, EventArgs e)
         {
-            if (!chkValidForAdvancedFind.Checked && !chkValidForAudit.Checked && !chkRequirementLevel.Checked && !chkIsSecured.Checked)
+            if (!MapIsValueSet(cboValidForAdvancedFind).HasValue && !MapIsValueSet(cboValidForAudit).HasValue && !chkRequirementLevel.Checked && !MapIsValueSet(cboIsSecured).HasValue)
             {
                 MessageBox.Show(this, @"It is required to select at least one property to update:\r\n- Valid for advanced find\r\n- Is audit enabled\r\n - Requirement levelr\n - Is secured",
                     @"Warning",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
-
                 return;
             }
 
             var us = new UpdateSettings
             {
                 Items = lvAttributes.Items.Cast<ListViewItem>().Select(i => (ListViewItem)i.Clone()).ToList(),
-                UpdateValidForAdvancedFind = chkValidForAdvancedFind.Checked,
-                UpdateAuditIsEnabled = chkValidForAudit.Checked,
-                UpdateRequirementLevel = chkRequirementLevel.Checked,
+                UpdateValidForAdvancedFind = MapIsValueSet(cboValidForAdvancedFind),
+                UpdateAuditIsEnabled = MapIsValueSet(cboValidForAudit),
                 RequirementLevelValue = chkRequirementLevel.Checked ? MapSdkValue(cboRequirementLevel.SelectedIndex) : null,
-                UpdateIsSecured = chkIsSecured.Checked
+                UpdateIsSecured = MapIsValueSet(cboIsSecured)
             };
 
             var uaForm = new Forms.UpdateAttributesForm(Service, us);
@@ -430,7 +432,7 @@ namespace MsCrmTools.AttributeBulkUpdater
         {
             CheckItems();
         }
-
+               
         private AttributeRequiredLevel? MapSdkValue(int selectedValue)
         {
             switch (selectedValue)
@@ -440,6 +442,22 @@ namespace MsCrmTools.AttributeBulkUpdater
                 case 2: return AttributeRequiredLevel.None;
                 default: return null;
             }
+        }
+
+        private bool? MapIsValueSet(ComboBox comboBox)
+        {
+            if (comboBox.SelectedItem == null)
+                return null;
+
+            string selectedText = (string) comboBox.SelectedItem;
+            if(selectedText.ToLower() == "set unselected")
+            {
+                return false;
+            }
+            if (selectedText.ToLower() == "set selected")
+                return true;
+
+            return null;
         }
     }
 }

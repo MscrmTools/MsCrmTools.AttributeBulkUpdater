@@ -86,24 +86,24 @@ namespace MsCrmTools.AttributeBulkUpdater.Forms
 
                     if (amd.IsCustomizable.Value || amd.IsManaged.HasValue && amd.IsManaged.Value == false)
                     {
-                        if (us.UpdateValidForAdvancedFind)
+                        if (us.UpdateValidForAdvancedFind.HasValue)
                         {
-                            amd.IsValidForAdvancedFind.Value = item.Checked;
+                            amd.IsValidForAdvancedFind.Value = us.UpdateValidForAdvancedFind.Value;
                         }
 
-                        if (us.UpdateAuditIsEnabled)
+                        if (us.UpdateAuditIsEnabled.HasValue)
                         {
-                            amd.IsAuditEnabled.Value = item.Checked;
+                            amd.IsAuditEnabled.Value = us.UpdateAuditIsEnabled.Value;
                         }
 
-                        if (us.UpdateRequirementLevel && us.RequirementLevelValue.HasValue)
+                        if (us.RequirementLevelValue.HasValue)
                         {
                             amd.RequiredLevel = new AttributeRequiredLevelManagedProperty(us.RequirementLevelValue.Value);
                         }
 
-                        if (us.UpdateIsSecured)
+                        if (us.UpdateIsSecured.HasValue)
                         {
-                            amd.IsSecured = item.Checked;
+                            amd.IsSecured = us.UpdateIsSecured.Value;
                         }
 
                         innerService.Execute(new UpdateAttributeRequest
@@ -154,10 +154,13 @@ namespace MsCrmTools.AttributeBulkUpdater.Forms
             var itemsToManage = (from item in us.Items
                                  let amd = (AttributeMetadata)item.Tag
                                  where
-                                     amd.IsValidForAdvancedFind.Value != item.Checked && us.UpdateValidForAdvancedFind ||
-                                     amd.IsAuditEnabled.Value != item.Checked && us.UpdateAuditIsEnabled ||
-                                     amd.IsSecured.HasValue && amd.IsSecured.Value != item.Checked && us.UpdateIsSecured ||
-                                     (item.Checked && amd.RequiredLevel.Value != AttributeRequiredLevel.SystemRequired && amd.RequiredLevel.Value != us.RequirementLevelValue && us.UpdateRequirementLevel)
+                                 item.Checked &&
+                                 (
+                                     (us.UpdateValidForAdvancedFind.HasValue && us.UpdateValidForAdvancedFind.Value !=  amd.IsValidForAdvancedFind.Value) ||
+                                     (us.UpdateAuditIsEnabled.HasValue && us.UpdateAuditIsEnabled.Value != amd.IsAuditEnabled.Value) ||
+                                     (us.UpdateIsSecured.HasValue && us.UpdateIsSecured.Value !=  amd.IsSecured.HasValue) ||
+                                     (us.RequirementLevelValue.HasValue && us.RequirementLevelValue.Value != amd.RequiredLevel.Value)
+                                )
                                  select item).ToList();
 
             if (itemsToManage.Count == 0)
