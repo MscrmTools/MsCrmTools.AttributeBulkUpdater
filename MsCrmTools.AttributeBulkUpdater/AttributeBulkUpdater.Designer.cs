@@ -64,6 +64,9 @@ namespace MsCrmTools.AttributeBulkUpdater
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbPropertySelection.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -74,6 +77,8 @@ namespace MsCrmTools.AttributeBulkUpdater
             this.scMain.Panel2.SuspendLayout();
             this.scMain.SuspendLayout();
             this.gbAttributes.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // gbPropertySelection
@@ -326,6 +331,7 @@ namespace MsCrmTools.AttributeBulkUpdater
             // 
             // gbAttributes
             // 
+            this.gbAttributes.Controls.Add(this.panel1);
             this.gbAttributes.Controls.Add(this.btnInvertSelection);
             this.gbAttributes.Controls.Add(this.btnCheckAttrOnForms);
             this.gbAttributes.Controls.Add(this.btnCheck);
@@ -346,7 +352,7 @@ namespace MsCrmTools.AttributeBulkUpdater
             // 
             this.btnInvertSelection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInvertSelection.Enabled = false;
-            this.btnInvertSelection.Location = new System.Drawing.Point(1020, 25);
+            this.btnInvertSelection.Location = new System.Drawing.Point(1022, 117);
             this.btnInvertSelection.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnInvertSelection.Name = "btnInvertSelection";
             this.btnInvertSelection.Size = new System.Drawing.Size(200, 44);
@@ -359,7 +365,7 @@ namespace MsCrmTools.AttributeBulkUpdater
             // 
             this.btnCheckAttrOnForms.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCheckAttrOnForms.Enabled = false;
-            this.btnCheckAttrOnForms.Location = new System.Drawing.Point(600, 25);
+            this.btnCheckAttrOnForms.Location = new System.Drawing.Point(602, 117);
             this.btnCheckAttrOnForms.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnCheckAttrOnForms.Name = "btnCheckAttrOnForms";
             this.btnCheckAttrOnForms.Size = new System.Drawing.Size(251, 44);
@@ -372,7 +378,7 @@ namespace MsCrmTools.AttributeBulkUpdater
             // 
             this.btnCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCheck.Enabled = false;
-            this.btnCheck.Location = new System.Drawing.Point(861, 25);
+            this.btnCheck.Location = new System.Drawing.Point(863, 117);
             this.btnCheck.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(149, 44);
@@ -385,7 +391,7 @@ namespace MsCrmTools.AttributeBulkUpdater
             // 
             this.btnResetAttributes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnResetAttributes.Enabled = false;
-            this.btnResetAttributes.Location = new System.Drawing.Point(1230, 25);
+            this.btnResetAttributes.Location = new System.Drawing.Point(1232, 117);
             this.btnResetAttributes.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnResetAttributes.Name = "btnResetAttributes";
             this.btnResetAttributes.Size = new System.Drawing.Size(149, 44);
@@ -410,10 +416,10 @@ namespace MsCrmTools.AttributeBulkUpdater
             this.lvAttributes.Enabled = false;
             this.lvAttributes.FullRowSelect = true;
             this.lvAttributes.GridLines = true;
-            this.lvAttributes.Location = new System.Drawing.Point(12, 81);
+            this.lvAttributes.Location = new System.Drawing.Point(12, 173);
             this.lvAttributes.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.lvAttributes.Name = "lvAttributes";
-            this.lvAttributes.Size = new System.Drawing.Size(1369, 875);
+            this.lvAttributes.Size = new System.Drawing.Size(1369, 783);
             this.lvAttributes.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvAttributes.TabIndex = 2;
             this.lvAttributes.UseCompatibleStateImageBehavior = false;
@@ -448,6 +454,42 @@ namespace MsCrmTools.AttributeBulkUpdater
             // 
             this.columnHeader8.Text = "RequirementLevel";
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.LightYellow;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(14, 36);
+            this.panel1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1367, 70);
+            this.panel1.TabIndex = 9;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Location = new System.Drawing.Point(51, 6);
+            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(1315, 53);
+            this.label2.TabIndex = 1;
+            this.label2.Text = resources.GetString("label2.Text");
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(5, 16);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(32, 31);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // AttributeBulkUpdater
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -470,6 +512,8 @@ namespace MsCrmTools.AttributeBulkUpdater
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).EndInit();
             this.scMain.ResumeLayout(false);
             this.gbAttributes.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -510,5 +554,8 @@ namespace MsCrmTools.AttributeBulkUpdater
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

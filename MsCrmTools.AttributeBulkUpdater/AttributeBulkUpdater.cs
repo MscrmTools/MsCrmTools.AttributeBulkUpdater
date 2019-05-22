@@ -27,6 +27,8 @@ namespace MsCrmTools.AttributeBulkUpdater
         /// </summary>
         private int currentAttributesColumnOrder;
 
+        private ToolTip tt;
+
         #endregion Variables
 
         #region Constructor
@@ -37,6 +39,9 @@ namespace MsCrmTools.AttributeBulkUpdater
         public AttributeBulkUpdater()
         {
             InitializeComponent();
+
+            tt = new ToolTip();
+            tt.SetToolTip(label2, "List below controls what value to apply to selected property. Checked attributes will receive \"True\" value. Unchecked attributes will receive \"False\" value. For requirement level, checked attributes will be updated with selected value.");
         }
 
         #endregion Constructor
