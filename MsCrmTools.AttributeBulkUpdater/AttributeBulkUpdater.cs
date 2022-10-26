@@ -29,6 +29,8 @@ namespace MsCrmTools.AttributeBulkUpdater
         /// </summary>
         private int currentAttributesColumnOrder;
 
+        private int currentEntitiesColumnOrder;
+
         private ToolTip tt;
 
         #endregion Variables
@@ -86,7 +88,7 @@ namespace MsCrmTools.AttributeBulkUpdater
                 {
                     var parts = item.SubItems[4].Text.Split(',').Select(i => i.Trim()).Where(i => !string.IsNullOrEmpty(i)).ToList();
 
-                    item.Checked = forms.Any(f => parts.Contains(f));//.ToLower() == "true";
+                    item.Checked = forms.Any(f => parts.Contains(f));
                 }
             }
         }
@@ -387,8 +389,16 @@ namespace MsCrmTools.AttributeBulkUpdater
             btnCheck.Enabled = false;
             btnCheckAttrOnForms.Enabled = false;
 
-            lvEntities.Sorting = lvEntities.Sorting == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
-            lvEntities.ListViewItemSorter = new ListViewItemComparer(e.Column, lvEntities.Sorting);
+            if (e.Column == currentEntitiesColumnOrder)
+            {
+                lvEntities.Sorting = lvEntities.Sorting == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
+                lvEntities.ListViewItemSorter = new ListViewItemComparer(e.Column, lvEntities.Sorting);
+            }
+            else
+            {
+                currentEntitiesColumnOrder = e.Column;
+                lvEntities.ListViewItemSorter = new ListViewItemComparer(e.Column, SortOrder.Ascending);
+            }
         }
 
         #endregion Column Sorting Handlers
