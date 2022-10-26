@@ -155,6 +155,12 @@
     <Compile Include="AttributeBulkUpdater.Designer.cs">
       <DependentUpon>AttributeBulkUpdater.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSelectionForm.Designer.cs">
+      <DependentUpon>FormSelectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UpdateAttributesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,9 @@
     <EmbeddedResource Include="AttributeBulkUpdater.resx">
       <DependentUpon>AttributeBulkUpdater.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSelectionForm.resx">
+      <DependentUpon>FormSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UpdateAttributesForm.resx">
       <DependentUpon>UpdateAttributesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -180,68 +189,27 @@
     <EmbeddedResource Include="Images\notif_icn_info16.png" />
     <EmbeddedResource Include="Images\notif_icn_warn16.png" />
     <EmbeddedResource Include="Images\solidgreentick.gif" />
-    <Content Include="bin\coretools\CrmSvcUtil.exe" />
-    <Content Include="bin\coretools\CrmSvcUtil.xml" />
-    <Content Include="bin\coretools\Microsoft.Crm.Sdk.Proxy.dll" />
-    <Content Include="bin\coretools\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
-    <Content Include="bin\coretools\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll" />
-    <Content Include="bin\coretools\Microsoft.Rest.ClientRuntime.dll" />
-    <Content Include="bin\coretools\Microsoft.Xrm.Sdk.Deployment.dll" />
-    <Content Include="bin\coretools\Microsoft.Xrm.Sdk.dll" />
-    <Content Include="bin\coretools\Microsoft.Xrm.Tooling.Connector.dll" />
-    <Content Include="bin\coretools\Microsoft.Xrm.Tooling.CrmConnectControl.dll" />
-    <Content Include="bin\coretools\Microsoft.Xrm.Tooling.Ui.Styles.dll" />
-    <Content Include="bin\coretools\Newtonsoft.Json.dll" />
-    <Content Include="bin\coretools\Other Redistributable.txt" />
-    <Content Include="bin\coretools\SolutionPackager.exe" />
-    <Content Include="bin\coretools\System.ValueTuple.dll" />
-    <Content Include="bin\Debug\McTools.Xrm.Connection.dll" />
-    <Content Include="bin\Debug\McTools.Xrm.Connection.WinForms.dll" />
-    <Content Include="bin\Debug\Microsoft.Crm.Sdk.Proxy.dll" />
-    <Content Include="bin\Debug\Microsoft.Crm.Sdk.Proxy.xml" />
-    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
-    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll" />
-    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.xml" />
-    <Content Include="bin\Debug\Microsoft.IdentityModel.dll" />
-    <Content Include="bin\Debug\Microsoft.Rest.ClientRuntime.dll" />
-    <Content Include="bin\Debug\Microsoft.Web.XmlTransform.dll" />
-    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Deployment.dll" />
-    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Deployment.xml" />
-    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.dll" />
-    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Workflow.dll" />
-    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Workflow.xml" />
-    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.xml" />
-    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.Connector.dll" />
-    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.Connector.xml" />
-    <Content Include="bin\Debug\MsCrmTools.AttributeBulkUpdater.pdb" />
-    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
-    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
-    <Content Include="bin\Debug\NuGet.Core.dll" />
-    <Content Include="bin\Debug\Plugins\MsCrmTools.AttributeBulkUpdater.dll" />
-    <Content Include="bin\Debug\WeifenLuo.WinFormsUI.Docking.dll" />
-    <Content Include="bin\Debug\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll" />
-    <Content Include="bin\Debug\XrmToolBox.exe" />
-    <Content Include="bin\Debug\XrmToolBox.Extensibility.dll" />
-    <Content Include="bin\Debug\XrmToolBox.PluginsStore.dll" />
-    <Content Include="bin\Debug\XrmToolBox.Settings.xml" />
     <Content Include="Images\Title.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="bin\coretools\CrmSvcUtil.exe.config" />
-    <None Include="bin\coretools\LicenseTerms.docx" />
-    <None Include="bin\coretools\SolutionPackager.exe.config" />
-    <None Include="bin\Debug\MsCrmTools.AttributeBulkUpdater.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>IF NOT EXIST Plugins mkdir Plugins
-move /Y $(TargetFileName) Plugins</PostBuildEvent>
+    <PostBuildEvent>IF $(ConfigurationName) == Debug (
+
+    IF NOT EXIST Plugins mkdir Plugins
+
+    xcopy "$(TargetDir)$(TargetFileName)" "$(TargetDir)Plugins\" /Y
+
+    xcopy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)Plugins\" /Y
+
+)</PostBuildEvent>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.YearStamp.MonthStamp.DayStamp" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_BuildVersioningStyle="None.YearStamp.MonthStamp.DayStamp" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

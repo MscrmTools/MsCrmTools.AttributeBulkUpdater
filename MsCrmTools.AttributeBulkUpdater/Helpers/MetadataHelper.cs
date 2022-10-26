@@ -25,9 +25,9 @@ namespace MsCrmTools.AttributeBulkUpdater.Helpers
             List<EntityMetadata> entities = new List<EntityMetadata>();
 
             RetrieveAllEntitiesRequest request = new RetrieveAllEntitiesRequest
-                                                     {
-                                                         EntityFilters = EntityFilters.Entity
-                                                     };
+            {
+                EntityFilters = EntityFilters.Entity
+            };
 
             RetrieveAllEntitiesResponse response = (RetrieveAllEntitiesResponse)oService.Execute(request);
 
@@ -53,11 +53,11 @@ namespace MsCrmTools.AttributeBulkUpdater.Helpers
             try
             {
                 RetrieveEntityRequest request = new RetrieveEntityRequest
-                                                    {
-                                                        LogicalName = logicalName,
-                                                        EntityFilters = EntityFilters.Attributes,
-                                                        RetrieveAsIfPublished = true
-                                                    };
+                {
+                    LogicalName = logicalName,
+                    EntityFilters = EntityFilters.Attributes,
+                    RetrieveAsIfPublished = true
+                };
 
                 RetrieveEntityResponse response = (RetrieveEntityResponse)oService.Execute(request);
 
@@ -103,7 +103,11 @@ namespace MsCrmTools.AttributeBulkUpdater.Helpers
 
             foreach (Entity form in ec.Entities)
             {
-                allFormsXml.Append(form["formxml"]);
+                var tempDoc = new XmlDocument();
+                tempDoc.LoadXml(form["formxml"].ToString());
+                tempDoc.DocumentElement.SetAttribute("name", form.GetAttributeValue<string>("name"));
+
+                allFormsXml.Append(tempDoc.OuterXml);
             }
 
             allFormsXml.Append("</root>");

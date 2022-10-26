@@ -1,5 +1,6 @@
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
+using MsCrmTools.AttributeBulkUpdater.Forms;
 using MsCrmTools.AttributeBulkUpdater.Helpers;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 using XrmToolBox.Extensibility;
 using XrmToolBox.Extensibility.Interfaces;
 using CrmExceptionHelper = XrmToolBox.CrmExceptionHelper;
@@ -48,9 +50,14 @@ namespace MsCrmTools.AttributeBulkUpdater
 
         #region Properties
 
-        public string HelpUrl { get { return "https://github.com/MscrmTools/MsCrmTools.AttributeBulkUpdater/wiki"; } }
-        public string RepositoryName { get { return "MsCrmTools.AttributeBulkUpdater"; } }
-        public string UserName { get { return "MscrmTools"; } }
+        public string HelpUrl
+        { get { return "https://github.com/MscrmTools/MsCrmTools.AttributeBulkUpdater/wiki"; } }
+
+        public string RepositoryName
+        { get { return "MsCrmTools.AttributeBulkUpdater"; } }
+
+        public string UserName
+        { get { return "MscrmTools"; } }
 
         #endregion Properties
 
@@ -68,9 +75,19 @@ namespace MsCrmTools.AttributeBulkUpdater
 
         private void btnCheckAttrOnForms_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in lvAttributes.Items)
+            var forms = lvAttributes.Items.Cast<ListViewItem>().SelectMany(i => i.SubItems[4].Text.Split(',')).Select(i => i.Trim()).Distinct().Where(i => !string.IsNullOrEmpty(i)).ToList();
+
+            var dialog = new FormSelectionForm(forms);
+            if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                item.Checked = item.SubItems[4].Text.ToLower() == "true";
+                forms = dialog.SelectedForms;
+
+                foreach (ListViewItem item in lvAttributes.Items)
+                {
+                    var parts = item.SubItems[4].Text.Split(',').Select(i => i.Trim()).Where(i => !string.IsNullOrEmpty(i)).ToList();
+
+                    item.Checked = forms.Any(f => parts.Contains(f));//.ToLower() == "true";
+                }
             }
         }
 
@@ -202,11 +219,20 @@ namespace MsCrmTools.AttributeBulkUpdater
 
                                 string label = amd.DisplayName.UserLocalizedLabel != null ? amd.DisplayName.UserLocalizedLabel.Label : "N/A";
 
+                                var xDoc = XDocument.Parse(allFormsDoc.OuterXml);
+
+                                IEnumerable<XElement> nodes =
+                                (from el in xDoc.Root.Descendants("control")
+                                 where (string)el.Attribute("datafieldname") == amd.LogicalName
+                                 select el);
+
+                                var forms = string.Join(", ", nodes.Select(n => n.Ancestors("form").First().Attribute("name").Value).OrderBy(f => f));
+
                                 var item = new ListViewItem(label);
                                 item.SubItems.Add(amd.LogicalName);
                                 item.SubItems.Add(amd.IsValidForAdvancedFind.CanBeChanged.ToString());
                                 item.SubItems.Add((amd.IsCustomizable.Value || amd.IsManaged.HasValue && amd.IsManaged.Value == false).ToString());
-                                item.SubItems.Add((allFormsDoc.SelectSingleNode("//control[@datafieldname='" + amd.LogicalName + "']") != null).ToString());
+                                item.SubItems.Add(forms);// (allFormsDoc.SelectSingleNode("//control[@datafieldname='" + amd.LogicalName + "']") != null).ToString());
                                 item.SubItems.Add(amd.RequiredLevel.Value.ToString());
 
                                 item.Tag = amd;
