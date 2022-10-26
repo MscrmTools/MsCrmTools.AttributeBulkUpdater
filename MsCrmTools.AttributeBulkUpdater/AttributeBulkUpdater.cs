@@ -45,7 +45,7 @@ namespace MsCrmTools.AttributeBulkUpdater
             InitializeComponent();
 
             tt = new ToolTip();
-            tt.SetToolTip(label2, "List below controls what value to apply to selected property. Checked attributes will receive \"True\" value. Unchecked attributes will receive \"False\" value. For requirement level, checked attributes will be updated with selected value.");
+            tt.SetToolTip(label2, "List below controls what value to apply to selected property. Checked columns will receive \"True\" value. Unchecked columns will receive \"False\" value. For requirement level, checked columns will be updated with selected value.");
         }
 
         #endregion Constructor
@@ -155,7 +155,7 @@ namespace MsCrmTools.AttributeBulkUpdater
 
             WorkAsync(new WorkAsyncInfo
             {
-                Message = "Loading entities...",
+                Message = "Loading tables...",
                 Work = (bw, e) => { e.Result = MetadataHelper.RetrieveEntities(Service); },
                 PostWorkCallBack = e =>
                 {
@@ -200,7 +200,7 @@ namespace MsCrmTools.AttributeBulkUpdater
 
                 WorkAsync(new WorkAsyncInfo
                 {
-                    Message = "Loading attributes...",
+                    Message = "Loading columns...",
                     AsyncArgument = emd.LogicalName,
                     Work = (bw, evt) =>
                     {
@@ -234,7 +234,7 @@ namespace MsCrmTools.AttributeBulkUpdater
                                 item.SubItems.Add(amd.LogicalName);
                                 item.SubItems.Add(amd.IsValidForAdvancedFind.CanBeChanged.ToString());
                                 item.SubItems.Add((amd.IsCustomizable.Value || amd.IsManaged.HasValue && amd.IsManaged.Value == false).ToString());
-                                item.SubItems.Add(forms);// (allFormsDoc.SelectSingleNode("//control[@datafieldname='" + amd.LogicalName + "']") != null).ToString());
+                                item.SubItems.Add(forms);
                                 item.SubItems.Add(amd.RequiredLevel.Value.ToString());
 
                                 item.Tag = amd;
@@ -325,7 +325,7 @@ namespace MsCrmTools.AttributeBulkUpdater
 
                 WorkAsync(new WorkAsyncInfo
                 {
-                    Message = "Publishing entities...",
+                    Message = "Publishing table...",
                     AsyncArgument = lvEntities.SelectedItems[0].Tag,
                     Work = (bw, evt) =>
                     {

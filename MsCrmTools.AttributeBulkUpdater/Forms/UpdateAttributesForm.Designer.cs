@@ -58,9 +58,9 @@
             this.label1.Location = new System.Drawing.Point(24, 60);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(328, 20);
+            this.label1.Size = new System.Drawing.Size(480, 30);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Please wait while the attributes are updated...";
+            this.label1.Text = "Please wait while the columns are updated...";
             // 
             // label8
             // 
@@ -70,7 +70,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(350, 46);
             this.label8.TabIndex = 1;
-            this.label8.Text = "Updating attributes";
+            this.label8.Text = "Updating columns";
             // 
             // pbUpdate
             // 
@@ -117,7 +117,7 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Attribute";
+            this.columnHeader1.Text = "Column";
             this.columnHeader1.Width = 150;
             // 
             // columnHeader2
@@ -139,7 +139,7 @@
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Updating attributes";
+            this.Text = "Updating columns";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

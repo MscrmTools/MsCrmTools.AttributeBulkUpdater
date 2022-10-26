@@ -116,7 +116,7 @@ namespace MsCrmTools.AttributeBulkUpdater.Forms
                     }
                     else
                     {
-                        AddItemToInformationList(bw, Convert.ToInt32(attributesProcessed * 100 / itemsToManage.Count), amd.DisplayName.UserLocalizedLabel.Label, "Attribute not customizable!",
+                        AddItemToInformationList(bw, Convert.ToInt32(attributesProcessed * 100 / itemsToManage.Count), amd.DisplayName.UserLocalizedLabel.Label, "Column not customizable!",
                             Result.Warning);
                     }
                 }
@@ -162,7 +162,7 @@ namespace MsCrmTools.AttributeBulkUpdater.Forms
 
             if (itemsToManage.Count == 0)
             {
-                MessageBox.Show(this, "No attributes need to be updated!", "Information", MessageBoxButtons.OK,
+                MessageBox.Show(this, "No column need to be updated!", "Information", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 Close();
                 return;
